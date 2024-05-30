@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package signUp;
+
+service SignUpService {
+  rpc SignUp (SignUpRequest) returns (SignUpResponse);
+}
+
+message SignUpRequest {
+  string email = 1;
+  string username = 2;
+  string password = 3;
+  string domain = 4;
+  string device = 5;
+  string phone = 6;
+  
+  // string gender = 6;
+  // string address = 7;
+  // int32 age = 8;
+  // string name = 9;
+}
+
+message SignUpResponse {
+  string result = 1;
+}

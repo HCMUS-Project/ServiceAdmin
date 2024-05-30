@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+import "auth/user_token.proto";
+
+package signOut;
+
+service SignOutService {
+    rpc SignOut (SignOutRequest) returns (SignOutResponse);
+}
+
+message SignOutRequest {
+    userToken.User user = 1;
+}
+
+message SignOutResponse {
+    string result = 1;
+}

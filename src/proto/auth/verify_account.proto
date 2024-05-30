@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package verifyAccount;
+
+service VerifyAccountService {
+    rpc VerifyAccount(VerifyAccountRequest) returns (VerifyAccountResponse);
+    rpc SendMailOtp(SendMailRequest) returns (SendMailResponse);
+}
+
+message VerifyAccountRequest {
+    string email = 1;
+    string domain = 3;
+    string otp = 2;
+}
+
+message VerifyAccountResponse {
+    string result = 1;
+}
+
+message SendMailRequest {
+    string email = 1;
+    string domain = 3;
+}
+
+message SendMailResponse {
+    string result = 1;
+}
