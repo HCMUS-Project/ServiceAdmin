@@ -3,7 +3,7 @@ import {
     GetProfileResponse,
     UpdateProfileRequest,
     UpdateProfileResponse,
-} from 'src/proto_build/auth/profile_pb';
+} from 'src/proto_build/admin/profile_pb';
 
 export interface IGetProfileRequest extends GetProfileRequest.AsObject {}
 export interface IGetProfileResponse extends GetProfileResponse.AsObject {}

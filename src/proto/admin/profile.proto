@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-import "auth/user_token.proto";
+import "admin/user_token.proto";
 
 package profile;
 

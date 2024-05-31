@@ -8,6 +8,10 @@ export const TenantProfileSchema = new mongoose.Schema<ProfileInterface>(
             type: String,
             required: true,
         },
+        email: {
+            type: String,
+            required: true,
+        },
         phone: {
             type: String,
             required: true,
@@ -32,10 +36,19 @@ export const TenantProfileSchema = new mongoose.Schema<ProfileInterface>(
             type: String,
             required: false,
         },
-        is_deleted: {
+        stage: {
+            type: String,
+            default: 'new',
+        },
+        domain: {
+            type: String,
+            required: true,
+        },
+        is_verify: {
             type: Boolean,
             default: false,
         },
+
     },
     { timestamps: true },
 );

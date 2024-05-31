@@ -11,5 +11,7 @@ export interface Tenant extends Document {
     readonly is_deleted: boolean;
     readonly is_active: boolean;
     readonly is_verified: boolean;
+    readonly is_rejected: boolean;
     readonly profile_id: TenantProfile | string;
+    readonly created_at: Date;
 }

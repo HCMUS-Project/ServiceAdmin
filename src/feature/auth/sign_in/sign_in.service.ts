@@ -24,8 +24,8 @@ export class SignInService {
             });
 
             if (!checkUser) throw new GrpcUnauthenticatedException('TENANT_NOT_FOUND');
-            if (!checkUser.is_active) throw new GrpcUnauthenticatedException('TENANT_NOT_VERIFIED');
-
+            if (!checkUser.is_active) throw new GrpcUnauthenticatedException('TENANT_NOT_ACTIVED');
+            if (!checkUser.is_verified) throw new GrpcUnauthenticatedException('TENANT_NOT_VERIFIED');
             // Check password
             const isPasswordMatch = await argon.verify(checkUser.password, data.password);
             if (!isPasswordMatch) {

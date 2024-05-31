@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { AppService } from './app.service';
-import { SignUpRequest, SignUpResponse } from './proto_build/auth/sign_up_pb';
+import { SignUpRequest, SignUpResponse } from './proto_build/admin/sign_up_pb';
 
 @Controller()
 export class AppController {

@@ -5,6 +5,7 @@ import { SignInModule } from './sign_in/sign_in.module';
 import { RefreshTokenModule } from './refresh_token/refresh_token.module';
 import { SignOutModule } from './sign_out/sign_out.module';
 import { ProfileModule } from './profile/profile.module';
+import { TenantModule } from '../manage/tenant/tenant.module';
 
 @Module({
     imports: [
@@ -14,6 +15,7 @@ import { ProfileModule } from './profile/profile.module';
         RefreshTokenModule,
         SignOutModule,
         ProfileModule,
+        TenantModule,
     ],
 })
 export class AuthModule {}

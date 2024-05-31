@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 import { Tenant as TenantInterface } from '../interface/user.interface';
 import { v4 as uuidv4 } from 'uuid';
-import { Role } from 'src/proto_build/auth/user_token_pb';
+import { Role } from 'src/proto_build/admin/user_token_pb';
 import { TenantProfileSchema } from './profile.schema';
 
 export const TenantSchema = new mongoose.Schema<TenantInterface>(
@@ -38,6 +38,10 @@ export const TenantSchema = new mongoose.Schema<TenantInterface>(
             default: false,
         },
         is_verified: {
+            type: Boolean,
+            default: false,
+        },
+        is_rejected: {
             type: Boolean,
             default: false,
         },

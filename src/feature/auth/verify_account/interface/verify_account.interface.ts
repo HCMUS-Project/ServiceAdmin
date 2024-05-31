@@ -3,7 +3,7 @@ import {
     SendMailResponse,
     VerifyAccountRequest,
     VerifyAccountResponse,
-} from 'src/proto_build/auth/verify_account_pb';
+} from 'src/proto_build/admin/verify_account_pb';
 
 export interface IVerifyAccountRequest extends VerifyAccountRequest.AsObject {}
 export interface IVerifyAccountResponse extends VerifyAccountResponse.AsObject {}

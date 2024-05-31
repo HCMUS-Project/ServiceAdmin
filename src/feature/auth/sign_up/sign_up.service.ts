@@ -31,13 +31,17 @@ export class SignUpService {
             });
             if (checkUser) throw new GrpcUnauthenticatedException('TENANT_ALREADY_REGISTER');
 
+            
+
             // Save profile user
             const newProfile = new this.Profile({
+                domain: data.domain,
                 username: data.username,
+                email: data.email,
                 phone: data.phone,
                 address: "123 abc, phuong X, quan Y, thanh pho Z",
                 age: 18,
-                gender: "other",
+                gender: "unknown",
                 avatar: 'none',
                 name: "Nguyen Van A",
             });
@@ -49,7 +53,7 @@ export class SignUpService {
                 username: data.username,
                 password: await argon.hash(data.password),
                 domain: data.domain,
-                role: Role.USER,
+                role: Role.TENANT,
                 profile_id: newProfile.id,
             });
 

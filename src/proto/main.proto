@@ -1,13 +1,14 @@
 syntax = "proto3";
 
-import "auth/sign_in.proto";
-import "auth/sign_up.proto";
-import "auth/verify_account.proto";
-import "auth/refresh_token.proto";
-import "auth/profile.proto";
-import "auth/sign_out.proto";
+import "admin/sign_in.proto";
+import "admin/sign_up.proto";
+import "admin/verify_account.proto";
+import "admin/refresh_token.proto";
+import "admin/profile.proto";
+import "admin/sign_out.proto";
+import "admin/tenant.proto";
 
-package auth;
+package admin;
 
 service AppService {
   rpc FindOne (HeroById) returns (Hero) {}

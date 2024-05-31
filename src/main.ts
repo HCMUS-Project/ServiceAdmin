@@ -15,7 +15,6 @@ async function bootstrap() {
         bufferLogs: true,
         options: {
             package: [
-                'auth',
                 'signUp',
                 'verifyAccount',
                 'signIn',
@@ -23,6 +22,7 @@ async function bootstrap() {
                 'userToken',
                 'signOut',
                 'profile',
+                'tenant',
             ],
             protoPath: join(__dirname, '../src/proto/main.proto'),
             url: `${host}:${port}`,
