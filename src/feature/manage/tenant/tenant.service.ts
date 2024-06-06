@@ -20,9 +20,8 @@ export class TenantService {
     async getTenant(data: IGetTenantRequest): Promise<IGetTenantResponse> {
         try {
             let tenantList = []
-            // Check if user already exists and is active
+            // find user all type if type is undefined or find user by type
             if (data.type === undefined ) {
-                console.log('undefined')
                 tenantList = await this.User.find();
             }
             else {
