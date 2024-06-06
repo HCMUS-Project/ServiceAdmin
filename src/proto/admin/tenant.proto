@@ -6,7 +6,6 @@ package tenant;
 
 service TenantService {
     rpc GetTenant (GetTenantRequest) returns (GetTenantResponse);
-    rpc UpdateTenantProfile (UpdateTenantProfileRequest) returns (UpdateTenantProfileResponse);
     rpc Verify (VerifyRequest) returns (VerifyResponse);
     rpc SetTenantStage (SetTenantStageRequest) returns (SetTenantStageResponse);
 }
@@ -44,21 +43,6 @@ message GetTenantRequest {
 
 message GetTenantResponse {
     repeated Tenant tenant = 1;
-}
-
-message UpdateTenantProfileRequest {
-    userToken.User user = 1;
-    optional string username = 2;
-    optional string phone = 3;
-    optional string gender = 4;
-    optional string address = 5;
-    optional int32 age = 6;
-    optional string avatar = 7;
-    optional string name = 8;
-}
-
-message UpdateTenantProfileResponse {
-    TenantProfile tenantprofile = 1;
 }
 
 message VerifyRequest {

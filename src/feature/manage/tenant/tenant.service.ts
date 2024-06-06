@@ -5,7 +5,7 @@ import { Tenant } from 'src/models/user/interface/user.interface';
 import { GrpcUnauthenticatedException } from 'nestjs-grpc-exceptions';
 import * as argon from 'argon2';
 import { Jwt } from 'src/util/jwt/jwt';
-import { IGetTenantRequest, IGetTenantResponse, ISetTenantStageRequest, ISetTenantStageResponse, IVerifyRequest, IVerifyResponse, IUpdateTenantProfileRequest, IUpdateTenantProfileResponse } from './interface/tenant.interface';
+import { IGetTenantRequest, IGetTenantResponse, ISetTenantStageRequest, ISetTenantStageResponse, IVerifyRequest, IVerifyResponse } from './interface/tenant.interface';
 import { TenantProfile } from 'src/models/user/interface/profile.interface';
 
 @Injectable()
@@ -44,52 +44,6 @@ export class TenantService {
             })),
             };
         } catch (error) {
-            throw error;
-        }
-    }
-
-    async updateTenantProfile(data: IUpdateTenantProfileRequest): Promise<IUpdateTenantProfileResponse> {
-        try {
-            const tenantExist = await this.Profile.findOne({
-                domain: data.user.domain,
-                email: data.user.email,
-            });
-            if (!tenantExist) {
-                throw new GrpcUnauthenticatedException('TENANT_NOT_FOUND');
-            }
-            if (!tenantExist.is_verify) {
-                throw new GrpcUnauthenticatedException('TENANT_NOT_VERIFIED');
-            }
-
-            const updateTenant = await this.Profile.updateOne({ domain: data.user.domain, email: data.user.email }, data);
-
-            if (updateTenant.modifiedCount === 0) {
-                throw new GrpcUnauthenticatedException('TENANT_NOT_UPDATED');
-            }
-
-            const updatedTenantProfile = await this.Profile.findOne({
-                domain: data.user.domain,
-                email: data.user.email,
-            });
-
-            return {
-                tenantprofile: {
-                    ...updateTenant,
-                    username: updatedTenantProfile.username,
-                    email: updatedTenantProfile.email,
-                    phone: updatedTenantProfile.phone,
-                    gender: updatedTenantProfile.gender,
-                    address: updatedTenantProfile.address,
-                    age: updatedTenantProfile.age,
-                    avatar: updatedTenantProfile.avatar,
-                    name: updatedTenantProfile.name,
-                    stage: updatedTenantProfile.stage,
-                    isVerify: String(updatedTenantProfile.is_verify),
-                    createdAt: String(updatedTenantProfile.createAt),
-                },
-            };
-        }   
-        catch (error) {
             throw error;
         }
     }
