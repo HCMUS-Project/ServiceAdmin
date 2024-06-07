@@ -62,8 +62,18 @@ export class TenantService {
                 throw new GrpcUnauthenticatedException('TENANT_NOT_ACTIVED');
             }
 
-            const updateTenant = await this.User.updateOne({ domain: data.domain, email: data.email }, { is_verified: true });
-            const updatedTenantProfile = await this.Profile.findOne({ domain: data.domain, email: data.email }, { is_verify: true });
+            if (tenantExist.is_verified) {
+                throw new GrpcUnauthenticatedException('TENANT_ALREADY_VERIFIED');
+            }
+            let updateTenant = null;
+            if (data.isVerify === 'true') {
+                updateTenant = await this.User.updateOne({ domain: data.domain, email: data.email }, { is_verified: true });
+            }
+            else{
+                updateTenant = await this.User.updateOne({ domain: data.domain, email: data.email }, { is_rejected: true });
+            }
+
+            const updatedTenantProfile = await this.Profile.findOne({ domain: data.domain, email: data.email });
             
             if (updateTenant.modifiedCount === 0) {
                 throw new GrpcUnauthenticatedException('TENANT_NOT_VERIFIED');
