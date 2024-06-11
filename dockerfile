@@ -2,7 +2,7 @@
 FROM node:20
 
 # Set the working directory in the container
-WORKDIR /root/deploy/datn/ServiceAuth
+WORKDIR /root/deploy/datn/ServiceAdmin
 
 # Copy package.json and package-lock.json
 COPY . .
@@ -20,7 +20,7 @@ RUN yarn gen:proto
 RUN yarn build
 
 # Expose the port your app runs on
-EXPOSE 3001
+EXPOSE 3006
 
 # Command to run your application
 CMD ["yarn", "start"]

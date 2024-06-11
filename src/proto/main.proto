@@ -1,11 +1,5 @@
 syntax = "proto3";
 
-import "admin/sign_in.proto";
-import "admin/sign_up.proto";
-import "admin/verify_account.proto";
-import "admin/refresh_token.proto";
-import "admin/profile.proto";
-import "admin/sign_out.proto";
 import "admin/tenant.proto";
 
 package admin;

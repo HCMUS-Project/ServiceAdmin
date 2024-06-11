@@ -66,14 +66,16 @@ export class TenantService {
                 throw new GrpcUnauthenticatedException('TENANT_ALREADY_VERIFIED');
             }
             let updateTenant = null;
-            if (data.isVerify === 'true') {
+            let updatedTenantProfile = null;
+            if (data.isVerify === true) {
                 updateTenant = await this.User.updateOne({ domain: data.domain, email: data.email }, { is_verified: true });
+                updatedTenantProfile = await this.Profile.updateOne({ domain: data.domain, email: data.email }, { is_verify: true });
             }
             else{
                 updateTenant = await this.User.updateOne({ domain: data.domain, email: data.email }, { is_rejected: true });
             }
 
-            const updatedTenantProfile = await this.Profile.findOne({ domain: data.domain, email: data.email });
+            // const updatedTenantProfile = await this.Profile.findOne({ domain: data.domain, email: data.email });
             
             if (updateTenant.modifiedCount === 0) {
                 throw new GrpcUnauthenticatedException('TENANT_NOT_VERIFIED');
@@ -87,10 +89,10 @@ export class TenantService {
                     username: updatedTenant.username,
                     role: String(updatedTenant.role),
                     domain: updatedTenant.domain,
-                    isDeleted: String(updatedTenant.is_deleted),
-                    isActive: String(updatedTenant.is_active),
-                    isVerified: String(updatedTenant.is_verified),
-                    isRejected: String(updatedTenant.is_rejected),
+                    isDeleted: updatedTenant.is_deleted,
+                    isActive: updatedTenant.is_active,
+                    isVerified: updatedTenant.is_verified,
+                    isRejected: updatedTenant.is_rejected,
                     createdAt: String(updatedTenant.created_at),
             },
         };
@@ -133,7 +135,7 @@ export class TenantService {
                     avatar: updatedTenantProfile.avatar,
                     name: updatedTenantProfile.name,
                     stage: updatedTenantProfile.stage,
-                    isVerify: String(updatedTenantProfile.is_verify),
+                    isVerify: updatedTenantProfile.is_verify,
                     createdAt: String(updatedTenantProfile.createAt),
                 },
             };

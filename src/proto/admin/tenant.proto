@@ -15,10 +15,10 @@ message Tenant {
     string username = 2;
     string role = 3;
     string domain = 4;
-    string is_deleted = 5;
-    string is_active = 6;
-    string is_verified = 7;
-    string is_rejected = 8;
+    bool is_deleted = 5;
+    bool is_active = 6;
+    bool is_verified = 7;
+    bool is_rejected = 8;
     string created_at = 9;
 }
 
@@ -33,12 +33,12 @@ message TenantProfile {
     string name = 9;
     string stage = 10;
     string created_at = 11;
-    string is_verify = 12;
+    bool is_verify = 12;
 }
 
 message GetTenantRequest {
     userToken.User user = 1;
-    optional string type = 2;
+    optional bool type = 2;
 }
 
 message GetTenantResponse {
@@ -49,7 +49,7 @@ message VerifyRequest {
     userToken.User user = 1;
     string domain = 2;
     string email = 3;
-    string is_verify = 4;
+    bool is_verify = 4;
 }
 
 message VerifyResponse {

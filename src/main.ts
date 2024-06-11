@@ -8,20 +8,14 @@ async function bootstrap() {
     // Create a ConfigService instance
     const configService = new ConfigService();
     const port = configService.get<number>('PORT');
-    const host = configService.get<string>('AUTH_HOST')
+    const host = configService.get<string>('ADMIN_HOST')
     // Create a microservice instance
     const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
         transport: Transport.GRPC,
         bufferLogs: true,
         options: {
-            package: [
-                'signUp',
-                'verifyAccount',
-                'signIn',
-                'refreshToken',
-                'userToken',
-                'signOut',
-                'profile',
+            package: [ 
+                'userToken', 
                 'tenant',
             ],
             protoPath: join(__dirname, '../src/proto/main.proto'),
