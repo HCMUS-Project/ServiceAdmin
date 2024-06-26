@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { TenantService } from './tenant.service';
-import { IGetTenantRequest, IGetTenantResponse, ISetTenantStageRequest, ISetTenantStageResponse, IVerifyRequest, IVerifyResponse } from './interface/tenant.interface';
+import { IFullTenantProfileResponse, IGetTenantRequest, IGetTenantResponse, ISetTenantDomainRequest, ISetTenantStageRequest, ISetTenantStageResponse, IVerifyRequest, IVerifyResponse } from './interface/tenant.interface';
 
 @Controller()
 export class TenantController {
@@ -20,5 +20,10 @@ export class TenantController {
     @GrpcMethod('TenantService', 'setTenantStage')
     async setTenantStatus(data: ISetTenantStageRequest): Promise<ISetTenantStageResponse> {
         return await this.tenantService.setTenantStage(data);
+    }
+
+    @GrpcMethod('TenantService', 'setTenantDomain')
+    async setTenantDomain(data: ISetTenantDomainRequest): Promise<IFullTenantProfileResponse> {
+        return await this.tenantService.setTenantDomain(data);
     }
 }

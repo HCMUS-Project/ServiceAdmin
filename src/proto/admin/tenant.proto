@@ -8,6 +8,7 @@ service TenantService {
     rpc GetTenant (GetTenantRequest) returns (GetTenantResponse);
     rpc Verify (VerifyRequest) returns (VerifyResponse);
     rpc SetTenantStage (SetTenantStageRequest) returns (SetTenantStageResponse);
+    rpc SetTenantDomain (SetTenantDomainRequest) returns (FullTenantProfileResponse);
 }
 
 message Tenant {
@@ -47,9 +48,8 @@ message GetTenantResponse {
 
 message VerifyRequest {
     userToken.User user = 1;
-    string domain = 2;
-    string email = 3;
-    bool is_verify = 4;
+    string email = 2;
+    bool is_verify = 3;
 }
 
 message VerifyResponse {
@@ -59,10 +59,20 @@ message VerifyResponse {
 message SetTenantStageRequest {
     userToken.User user = 1;
     string email = 2;
-    string domain = 3;
-    string stage = 4;
+    string stage = 3;
 }
 
 message SetTenantStageResponse {
     TenantProfile tenantprofile = 1;
+}
+
+message SetTenantDomainRequest{
+    userToken.User user = 1;
+    string email = 2;
+    string domain = 3;
+}
+
+message FullTenantProfileResponse{
+    Tenant tenant = 1;
+    TenantProfile tenant_profile = 2;
 }

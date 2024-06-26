@@ -29,7 +29,8 @@ import { TenantProfileSchema } from 'src/models/user/schema/profile.schema';
         },
         {
             provide: 'TENANTPROFILE_MODEL',
-            useFactory: (mongoose: Mongoose) => mongoose.model('tenantprofile', TenantProfileSchema),
+            useFactory: (mongoose: Mongoose) =>
+                mongoose.model('tenantprofile', TenantProfileSchema),
             inject: ['DATABASE_CONNECTION'],
         },
     ],
