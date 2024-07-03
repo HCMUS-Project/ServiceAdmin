@@ -43,7 +43,7 @@ message GetTenantRequest {
 }
 
 message GetTenantResponse {
-    repeated Tenant tenant = 1;
+    repeated FullTenantProfileResponse tenant = 1;
 }
 
 message VerifyRequest {
