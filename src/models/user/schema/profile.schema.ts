@@ -42,13 +42,24 @@ export const TenantProfileSchema = new mongoose.Schema<ProfileInterface>(
         },
         domain: {
             type: String,
+            required: false,
+        },
+        companyName: {
+            type: String,
+            required: true,
+        },
+        companyAddress: {
+            type: String,
+            required: true,
+        },
+        description: {
+            type: String,
             required: true,
         },
         is_verify: {
             type: Boolean,
             default: false,
         },
-
     },
     { timestamps: true },
 );

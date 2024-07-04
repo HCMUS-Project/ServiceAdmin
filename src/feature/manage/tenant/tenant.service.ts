@@ -23,14 +23,24 @@ export class TenantService {
     constructor(
         @Inject(LoggerKey) private logger: Logger,
         @Inject('TENANT_MODEL') private readonly User: Model<Tenant>,
-        @Inject('TENANTPROFILE_MODEL') private readonly tenantElement: Model<TenantProfile>,
+        @Inject('TENANTPROFILE_MODEL') private readonly Profile: Model<TenantProfile>,
         private readonly jwtService: Jwt,
     ) {}
 
     async getTenant(data: IGetTenantRequest): Promise<IGetTenantResponse> {
-        try { 
-            const matchStage = data.type !== undefined ? { is_active: data.type } : {};
+        try {
+            // const matchStage = data.type !== undefined ? { is_active: data.type } : {};
 
+            const propertiesData = ['isActive', 'isVerified', 'isRejected'];
+            const propertiesMatch = ['is_active', 'is_verified', 'is_rejected'];
+            let matchStage = {};
+
+            propertiesData.forEach((property, index) => {
+                if (data[property] !== undefined) {
+                    matchStage[propertiesMatch[index]] = data[property];
+                }
+            });
+            // console.log(data, matchStage)
             const tenantList = await this.User.aggregate([
                 {
                     $addFields: {
@@ -63,35 +73,36 @@ export class TenantService {
             // console.log(tenantList);
 
             return {
-                tenant: tenantList.map(
-                    tenantElement =>
-                        ({
-                            tenant: {
-                                email: tenantElement.tenant.email,
-                                username: tenantElement.tenant.username,
-                                role: String(tenantElement.tenant.role),
-                                domain: tenantElement.tenant.domain,
-                                isDeleted: tenantElement.tenant.is_deleted,
-                                isActive: tenantElement.tenant.is_active,
-                                isVerified: tenantElement.tenant.is_verified,
-                                isRejected: tenantElement.tenant.is_rejected,
-                                createdAt: String(tenantElement.tenant.createdAt),
-                            },
-                            tenantProfile: {
-                                username: tenantElement.tenant_profile.username,
-                                email: tenantElement.tenant_profile.email,
-                                phone: tenantElement.tenant_profile.phone,
-                                gender: tenantElement.tenant_profile.gender,
-                                address: tenantElement.tenant_profile.address,
-                                age: tenantElement.tenant_profile.age,
-                                avatar: tenantElement.tenant_profile.avatar,
-                                name: tenantElement.tenant_profile.name,
-                                stage: tenantElement.tenant_profile.stage,
-                                isVerify: tenantElement.tenant_profile.is_verify,
-                                createdAt: String(tenantElement.tenant_profile.createdAt),
-                            },
-                        }) as IFullTenantProfileResponse,
-                ),
+                tenant: tenantList.map(tenantElement => ({
+                    tenant: {
+                        email: tenantElement.tenant.email,
+                        username: tenantElement.tenant.username,
+                        role: String(tenantElement.tenant.role),
+                        domain: tenantElement.tenant.domain,
+                        isDeleted: tenantElement.tenant.is_deleted,
+                        isActive: tenantElement.tenant.is_active,
+                        isVerified: tenantElement.tenant.is_verified,
+                        isRejected: tenantElement.tenant.is_rejected,
+                        createdAt: String(tenantElement.tenant.createdAt),
+                    },
+                    tenantProfile: {
+                        username: tenantElement.tenant_profile.username,
+                        email: tenantElement.tenant_profile.email,
+                        phone: tenantElement.tenant_profile.phone,
+                        gender: tenantElement.tenant_profile.gender,
+                        address: tenantElement.tenant_profile.address,
+                        age: tenantElement.tenant_profile.age,
+                        avatar: tenantElement.tenant_profile.avatar,
+                        name: tenantElement.tenant_profile.name,
+                        stage: tenantElement.tenant_profile.stage,
+                        isVerify: tenantElement.tenant_profile.is_verify,
+                        createdAt: String(tenantElement.tenant_profile.createdAt),
+                        companyName: tenantElement.tenant_profile.companyName,
+                        companyAddress: tenantElement.tenant_profile.companyAddress,
+                        description: tenantElement.tenant_profile.description,
+                        domain: tenantElement.tenant_profile.domain,
+                    },
+                })),
             } as IGetTenantResponse;
         } catch (error) {
             throw error;
@@ -121,7 +132,7 @@ export class TenantService {
                     { email: data.email },
                     { is_verified: true },
                 );
-                updatedTenantProfile = await this.tenantElement.updateOne(
+                updatedTenantProfile = await this.Profile.updateOne(
                     { email: data.email },
                     { is_verify: true },
                 );
@@ -162,14 +173,14 @@ export class TenantService {
 
     async setTenantStage(data: ISetTenantStageRequest): Promise<ISetTenantStageResponse> {
         try {
-            const tenantExist = await this.tenantElement.findOne({
+            const tenantExist = await this.Profile.findOne({
                 email: data.email,
             });
             if (!tenantExist) {
                 throw new GrpcUnauthenticatedException('TENANT_NOT_FOUND');
             }
 
-            const updateTenant = await this.tenantElement.updateOne(
+            const updateTenant = await this.Profile.updateOne(
                 { email: data.email },
                 { stage: data.stage },
             );
@@ -178,7 +189,7 @@ export class TenantService {
                 throw new GrpcUnauthenticatedException('TENANT_NOT_UPDATED');
             }
 
-            const updatedTenantProfile = await this.tenantElement.findOne({
+            const updatedTenantProfile = await this.Profile.findOne({
                 email: data.email,
             });
 
@@ -195,7 +206,11 @@ export class TenantService {
                     name: updatedTenantProfile.name,
                     stage: updatedTenantProfile.stage,
                     isVerify: updatedTenantProfile.is_verify,
-                    createdAt: String(updatedTenantProfile.createAt),
+                    createdAt: String(updatedTenantProfile.createdAt),
+                    companyName: updatedTenantProfile.companyName,
+                    companyAddress: updatedTenantProfile.companyAddress,
+                    description: updatedTenantProfile.description,
+                    domain: updatedTenantProfile.domain
                 },
             };
         } catch (error) {
@@ -209,7 +224,7 @@ export class TenantService {
                 email: data.email,
             });
 
-            const profileExist = await this.tenantElement.findOne({
+            const profileExist = await this.Profile.findOne({
                 email: data.email,
             });
             if (!tenantExist) {
@@ -236,7 +251,7 @@ export class TenantService {
                 throw new GrpcUnauthenticatedException('TENANT_NOT_UPDATED');
             }
 
-            const updateTenantProfile = await this.tenantElement.updateOne(
+            const updateTenantProfile = await this.Profile.updateOne(
                 { email: data.email },
                 { domain: data.domain },
             );
@@ -249,7 +264,7 @@ export class TenantService {
                 email: data.email,
             });
 
-            const tenantElement = await this.tenantElement.findOne({
+            const Profile = await this.Profile.findOne({
                 email: data.email,
             });
 
@@ -266,17 +281,21 @@ export class TenantService {
                     createdAt: String(Tenant.created_at),
                 },
                 tenantProfile: {
-                    username: tenantElement.username,
-                    email: tenantElement.email,
-                    phone: tenantElement.phone,
-                    gender: tenantElement.gender,
-                    address: tenantElement.address,
-                    age: tenantElement.age,
-                    avatar: tenantElement.avatar,
-                    name: tenantElement.name,
-                    stage: tenantElement.stage,
-                    isVerify: tenantElement.is_verify,
-                    createdAt: String(tenantElement.createAt),
+                    username: Profile.username,
+                    email: Profile.email,
+                    phone: Profile.phone,
+                    gender: Profile.gender,
+                    address: Profile.address,
+                    age: Profile.age,
+                    avatar: Profile.avatar,
+                    name: Profile.name,
+                    stage: Profile.stage,
+                    isVerify: Profile.is_verify,
+                    createdAt: String(Profile.createdAt),
+                    companyName: Profile.companyName,
+                    companyAddress: Profile.companyAddress,
+                    description: Profile.description,
+                    domain: Profile.domain
                 },
             };
         } catch (error) {

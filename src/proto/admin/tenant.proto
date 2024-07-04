@@ -24,22 +24,28 @@ message Tenant {
 }
 
 message TenantProfile {
-    string username = 2;
-    string email = 3;
-    string phone = 4;
-    string gender = 5;
-    string address = 6;
-    int32 age = 7;
-    string avatar = 8;
-    string name = 9;
-    string stage = 10;
-    string created_at = 11;
-    bool is_verify = 12;
+    string username = 1;
+    string email = 2;
+    string phone = 3;
+    string gender = 4;
+    string address = 5;
+    int32 age = 6;
+    string avatar = 7;
+    string name = 8;
+    string stage = 9;
+    string company_name = 10;
+    string company_address = 11;
+    string created_at = 12;
+    bool is_verify = 13;
+    string description = 14;
+    string domain = 15;
 }
 
 message GetTenantRequest {
     userToken.User user = 1;
-    optional bool type = 2;
+    optional bool is_active = 2;
+    optional bool is_verified = 3;
+    optional bool is_rejected = 4;
 }
 
 message GetTenantResponse {

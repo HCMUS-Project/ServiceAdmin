@@ -1,8 +1,8 @@
 import * as mongoose from 'mongoose';
 import { Tenant as TenantInterface } from '../interface/user.interface';
 import { v4 as uuidv4 } from 'uuid';
-import { Role } from 'src/proto_build/admin/user_token_pb';
 import { TenantProfileSchema } from './profile.schema';
+import {Role} from 'src/proto_build/admin/user_token_pb';
 
 export const TenantSchema = new mongoose.Schema<TenantInterface>(
     {
@@ -26,7 +26,7 @@ export const TenantSchema = new mongoose.Schema<TenantInterface>(
         },
         domain: {
             type: String,
-            required: true,
+            required: false,
             // unique: true,
         },
         is_deleted: {
@@ -53,4 +53,4 @@ export const TenantSchema = new mongoose.Schema<TenantInterface>(
     { timestamps: true },
 );
 
-TenantSchema.index({ email: 1, domain: 1 }, { unique: true });
+TenantSchema.index({ email: 1 }, { unique: true });
