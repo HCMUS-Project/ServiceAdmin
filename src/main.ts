@@ -16,7 +16,7 @@ async function bootstrap() {
         options: {
             package: [ 
                 'userToken', 
-                'tenant',
+                'managetenant',
             ],
             protoPath: join(__dirname, '../src/proto/main.proto'),
             url: `${host}:${port}`,

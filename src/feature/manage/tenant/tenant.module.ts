@@ -4,12 +4,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { Mongoose } from 'mongoose';
 import { TenantSchema } from 'src/models/user/schema/user.schema';
 import { Jwt } from 'src/util/jwt/jwt';
-import { TenantController } from './tenant.controller';
+// import { TenantController } from './tenant.controller';
 import { TenantService } from './tenant.service';
 import { TenantProfileSchema } from 'src/models/user/schema/profile.schema';
 import { ExternalServiceModule } from 'src/feature/externalServices/external.module';
 import { CreateTenantAdminService } from 'src/feature/externalServices/tenant/createTenant/createTenant.service';
 import { CreateTenantProfileAdminService } from 'src/feature/externalServices/tenant/createTenantProfile/createTenantProfile.service';
+import {ManageTenantController} from './tenant.controller';
 
 @Module({
     imports: [
@@ -22,7 +23,7 @@ import { CreateTenantProfileAdminService } from 'src/feature/externalServices/te
         }),
         ExternalServiceModule,
     ],
-    controllers: [TenantController],
+    controllers: [ManageTenantController],
     providers: [
         Jwt,
         TenantService,

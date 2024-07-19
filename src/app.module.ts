@@ -9,10 +9,17 @@ import { GrpcExceptionFilter } from './core/response/exception.filter';
 import { ResponseInterceptor } from './core/response/response.interceptor';
 import { DatabaseModule } from './core/database/modules/database.module';
 import { CacheModule } from './core/cache/modules/cache.module';
-import {TenantModule} from './feature/manage/tenant/tenant.module';
+import { TenantModule } from './feature/manage/tenant/tenant.module';
 
 @Module({
-    imports: [LoggerModule, ConfigsModule, ContextModule, CacheModule, DatabaseModule, TenantModule],
+    imports: [
+        LoggerModule,
+        ConfigsModule,
+        ContextModule,
+        CacheModule,
+        DatabaseModule,
+        TenantModule
+    ],
     controllers: [AppController],
     providers: [
         AppService,
