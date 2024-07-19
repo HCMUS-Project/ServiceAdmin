@@ -17,7 +17,7 @@ export class CreateTenantAdminService {
 
     async createTenant(data: ICreateTenantRequest): Promise<ICreateTenantResponse> {
         try {
-            return await firstValueFrom(this.createTenantService.creatTenant(data));
+            return await firstValueFrom(this.createTenantService.createTenant(data));
         } catch (e) {
             // console.log(e)
             let errorDetails: { error?: string };

@@ -24,7 +24,7 @@ export class CreateTenantProfileAdminService {
         data: ICreateTenantProfileRequest,
     ): Promise<ICreateTenantProfileResponse> {
         try {
-            return await firstValueFrom(this.createTenantProfileService.creatTenantProfile(data));
+            return await firstValueFrom(this.createTenantProfileService.createTenantProfile(data));
         } catch (e) {
             // console.log(e)
             let errorDetails: { error?: string };

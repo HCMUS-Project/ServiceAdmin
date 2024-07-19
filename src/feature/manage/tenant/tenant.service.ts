@@ -286,6 +286,12 @@ export class TenantService {
             const createTenant = await this.createTenantAdminService.createTenant(dataCreateTenant);
 
             const dataCreateTenantProfile = {
+                user: {
+                    role: 2,
+                    email: Tenant.email,
+                    domain: Tenant.domain,
+                    accessToken: '',
+                },
                 tenantId: createTenant.tenant.id,
                 address: Profile.address,
                 phoneNumber: Profile.phone,
