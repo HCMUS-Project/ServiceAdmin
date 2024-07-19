@@ -7,6 +7,9 @@ import { Jwt } from 'src/util/jwt/jwt';
 import { TenantController } from './tenant.controller';
 import { TenantService } from './tenant.service';
 import { TenantProfileSchema } from 'src/models/user/schema/profile.schema';
+import { ExternalServiceModule } from 'src/feature/externalServices/external.module';
+import { CreateTenantAdminService } from 'src/feature/externalServices/tenant/createTenant/createTenant.service';
+import { CreateTenantProfileAdminService } from 'src/feature/externalServices/tenant/createTenantProfile/createTenantProfile.service';
 
 @Module({
     imports: [
@@ -17,6 +20,7 @@ import { TenantProfileSchema } from 'src/models/user/schema/profile.schema';
                 secret: configService.get<string>('JWT_SECRET'),
             }),
         }),
+        ExternalServiceModule,
     ],
     controllers: [TenantController],
     providers: [
@@ -33,6 +37,8 @@ import { TenantProfileSchema } from 'src/models/user/schema/profile.schema';
                 mongoose.model('tenantprofile', TenantProfileSchema),
             inject: ['DATABASE_CONNECTION'],
         },
+        CreateTenantAdminService,
+        CreateTenantProfileAdminService,
     ],
 })
 export class TenantModule {}

@@ -6,7 +6,7 @@
     "private": true,
     "license": "UNLICENSED",
     "scripts": {
-        "gen:proto": "grpc_tools_node_protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --ts_out=import_style=commonjs,grpc_js:src/proto_build --js_out=import_style=commonjs,binary:src/proto_build -I ./src/proto ./src/proto/*.proto ./src/proto/**/*.proto",
+        "gen:proto": "grpc_tools_node_protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --ts_out=import_style=commonjs,grpc_js:src/proto_build --js_out=import_style=commonjs,binary:src/proto_build -I ./src/proto ./src/proto/*.proto ./src/proto/**/*.proto ./src/proto/**/**/*.proto",
         "gen:proto_folder": "rm -rf src/proto_build && mkdir -p src/proto_build",
         "build": "nest build",
         "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

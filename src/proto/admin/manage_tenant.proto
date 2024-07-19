@@ -2,16 +2,16 @@ syntax = "proto3";
 
 import "admin/user_token.proto";
 
-package tenant;
+package managetenant;
 
-service TenantService {
+service ManageTenantService {
     rpc GetTenant (GetTenantRequest) returns (GetTenantResponse);
     rpc Verify (VerifyRequest) returns (VerifyResponse);
     rpc SetTenantStage (SetTenantStageRequest) returns (SetTenantStageResponse);
     rpc SetTenantDomain (SetTenantDomainRequest) returns (FullTenantProfileResponse);
 }
 
-message Tenant {
+message TenantAcc {
     string email = 1;
     string username = 2;
     string role = 3;
@@ -23,7 +23,7 @@ message Tenant {
     string created_at = 9;
 }
 
-message TenantProfile {
+message TenantProfileAcc {
     string username = 1;
     string email = 2;
     string phone = 3;
@@ -59,7 +59,7 @@ message VerifyRequest {
 }
 
 message VerifyResponse {
-    Tenant tenant = 1;
+    TenantAcc tenant = 1;
 }
 
 message SetTenantStageRequest {
@@ -69,7 +69,7 @@ message SetTenantStageRequest {
 }
 
 message SetTenantStageResponse {
-    TenantProfile tenantprofile = 1;
+    TenantProfileAcc tenantprofile = 1;
 }
 
 message SetTenantDomainRequest{
@@ -79,6 +79,6 @@ message SetTenantDomainRequest{
 }
 
 message FullTenantProfileResponse{
-    Tenant tenant = 1;
-    TenantProfile tenant_profile = 2;
+    TenantAcc tenant = 1;
+    TenantProfileAcc tenant_profile = 2;
 }

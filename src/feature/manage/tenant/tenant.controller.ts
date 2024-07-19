@@ -1,7 +1,16 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { TenantService } from './tenant.service';
-import { IFullTenantProfileResponse, IGetTenantRequest, IGetTenantResponse, ISetTenantDomainRequest, ISetTenantStageRequest, ISetTenantStageResponse, IVerifyRequest, IVerifyResponse } from './interface/tenant.interface';
+import {
+    IFullTenantProfileResponse,
+    IGetTenantRequest,
+    IGetTenantResponse,
+    ISetTenantDomainRequest,
+    ISetTenantStageRequest,
+    ISetTenantStageResponse,
+    IVerifyRequest,
+    IVerifyResponse,
+} from './interface/tenant.interface';
 
 @Controller()
 export class TenantController {

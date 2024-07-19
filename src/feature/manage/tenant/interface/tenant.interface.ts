@@ -1,18 +1,9 @@
-import {
-    FullTenantProfileResponse,
-    GetTenantRequest,
-    GetTenantResponse,
-    SetTenantDomainRequest,
-    SetTenantStageRequest,
-    SetTenantStageResponse,
-    Tenant,
-    TenantProfile,
-    VerifyRequest,
-    VerifyResponse,
-} from 'src/proto_build/admin/tenant_pb';
+import {FullTenantProfileResponse, GetTenantRequest, GetTenantResponse, SetTenantDomainRequest, SetTenantStageRequest, SetTenantStageResponse, TenantAcc, TenantProfileAcc, VerifyRequest, VerifyResponse} from "src/proto_build/admin/manage_tenant_pb";
 
-export interface ITenant extends Tenant.AsObject {}
-export interface ITenantProfile extends TenantProfile.AsObject {}
+ 
+
+export interface ITenantAcc extends TenantAcc.AsObject {}
+export interface ITenantProfileAcc extends TenantProfileAcc.AsObject {}
 
 export interface IGetTenantRequest extends GetTenantRequest.AsObject {}
 

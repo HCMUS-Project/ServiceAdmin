@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+import "admin/user_token.proto";
+
+package tenant;
+
+service TenantService {
+    rpc CreateTenant(CreateTenantRequest) returns (TenantResponse); 
+}
+
+message Tenant {
+    string id = 1;
+    string owner_id = 2;
+    string name = 3;
+    string domain = 4;
+    bool is_locked = 5;
+    string created_at = 6;
+    string updated_at = 7;
+}
+
+message CreateTenantRequest {
+    userToken.User user = 1;
+    string owner_id = 2;
+    string name = 3;
+    string domain = 4;
+}
+ 
+message TenantResponse {
+    Tenant tenant = 1;
+}
