@@ -6,6 +6,7 @@ package tenantProfile;
 
 service TenantProfileService {
     rpc CreateTenantProfile(CreateTenantProfileRequest) returns (TenantProfileResponse); 
+    rpc FindTenantProfileByTenantId(FindTenantProfileByTenantIdRequest) returns (TenantProfileResponse);
 }
 
 message TenantProfile {
@@ -40,4 +41,9 @@ message CreateTenantProfileRequest {
 
 message TenantProfileResponse {
     TenantProfile tenant_profile = 1;
+}
+
+message FindTenantProfileByTenantIdRequest {
+    string domain = 1;
+    string tenant_id = 2;
 }

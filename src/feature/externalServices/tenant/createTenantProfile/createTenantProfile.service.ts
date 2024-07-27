@@ -7,6 +7,7 @@ import {
     CreateTenantProfileService,
     ICreateTenantProfileRequest,
     ICreateTenantProfileResponse,
+    IFindTenantProfileByTenantIdRequest,
 } from './createTenantProfile.interface';
 
 @Injectable()
@@ -41,6 +42,39 @@ export class CreateTenantProfileAdminService {
             }
             if (errorDetails.error == 'TENANT_ALREADY_EXISTS') {
                 throw new GrpcItemNotFoundException('TENANT_ALREADY_EXISTS');
+            } else {
+                throw new NotFoundException(
+                    `Unhandled error type: ${errorDetails.error}`,
+                    'Error not recognized',
+                );
+            }
+        }
+    }
+
+    async findTenantProfileByTenantId(
+        data: IFindTenantProfileByTenantIdRequest,
+    ): Promise<ICreateTenantProfileResponse> {
+        try {
+            return await firstValueFrom(
+                this.createTenantProfileService.findTenantProfileByTenantId(data),
+            );
+        } catch (e) {
+            // console.log(e)
+            let errorDetails: { error?: string };
+            try {
+                errorDetails = JSON.parse(e.details);
+            } catch (parseError) {
+                console.error('Error parsing details:', parseError);
+                throw new GrpcItemNotFoundException(String(e));
+            }
+            // console.log(errorDetails);
+
+            if (errorDetails.error == 'PERMISSION_DENIED') {
+                throw new GrpcPermissionDeniedException('PERMISSION_DENIED');
+            } else if (errorDetails.error == 'TENANT_NOT_FOUND') {
+                throw new GrpcItemNotFoundException('TENANT_NOT_FOUND');
+            } else if (errorDetails.error == 'TENANT_PROFILE_NOT_FOUND') {
+                throw new GrpcItemNotFoundException('TENANT_PROFILE_NOT_FOUND');
             } else {
                 throw new NotFoundException(
                     `Unhandled error type: ${errorDetails.error}`,

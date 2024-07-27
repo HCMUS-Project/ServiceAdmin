@@ -6,6 +6,7 @@ package tenant;
 
 service TenantService {
     rpc CreateTenant(CreateTenantRequest) returns (TenantResponse); 
+    rpc FindTenantByDomain(FindTenantByDomainRequest) returns (TenantResponse);
 }
 
 message Tenant {
@@ -27,4 +28,8 @@ message CreateTenantRequest {
  
 message TenantResponse {
     Tenant tenant = 1;
+}
+
+message FindTenantByDomainRequest {
+    userToken.User user = 1;
 }
