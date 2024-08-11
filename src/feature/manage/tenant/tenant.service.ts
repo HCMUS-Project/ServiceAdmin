@@ -281,7 +281,7 @@ export class TenantService {
                 user: {
                     role: 2,
                     email: tenantExist.email,
-                    domain: tenantExist.domain,
+                    domain: data.domain,
                     accessToken: '',
                 },
             } as IFindTenantByDomainRequest;
